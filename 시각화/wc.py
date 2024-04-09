@@ -7,6 +7,9 @@ Created on Mon Apr  8 15:58:05 2024
 
 # 워드클라우드 만들기
 # - 워드클라우드는 Java 등 갖가지 문제점이 발생합니다. 버전 등을 잘 확인해주셔야 합니다.
+# 제약사항:
+ # 인수 df의 열이 2개이며 열 이름이 word, count이어야 함.
+
 
 # %%
 def make_wordcloud(df):
@@ -96,4 +99,5 @@ if __name__ == "__main__":
     df_word.head(5)
 
     make_wordcloud(df_word)
-    make_wordcloud(df_word, 'bird.png')
+    # %%
+    make_img_wordcloud(df_word, 'south_korea.png')
