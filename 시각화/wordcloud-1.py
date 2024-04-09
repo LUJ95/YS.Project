@@ -52,20 +52,6 @@ df_word.head(5)
 #  - 전처리 과정이 귀찮았습니다. 또한, 워드클라우드는 Java 등 갖가지 문제점이 발생합니다. 버전 등을 잘 확인해주셔야 합니다.
 #  - 데이터 프레임을 딕셔너리 형태로 변환해주셔야 합니다.
 
-dic_word = df_word.set_index('word').to_dict()['count']
-dic_word
-
-# %%
-
-wc = WordCloud(random_state = 123, font_path = './NanumBarunGothic.ttf', width = 400,
-               height = 400, background_color = 'white')
-
-img_wordcloud = wc.generate_from_frequencies(dic_word)
-
-plt.figure(figsize = (10, 10)) # 크기 지정하기
-plt.axis('off') # 축 없애기
-plt.imshow(img_wordcloud) # 결과 보여주기
-plt.savefig('워드클라우드') # 파일 저장
 
 # %%
 def make_wordcloud(df):
@@ -84,7 +70,9 @@ def make_wordcloud(df):
     plt.savefig('워드클라우드') # 파일 저장
     
 # %%
+make_wordcloud(df_word)
 
+# %%
 import PIL
 icon = PIL.Image.open('cloud2.png')
 
