@@ -25,6 +25,7 @@
 	- 변경 : 파일 이름을 인수로 받아서 저장
 		make_wordcloud(df, filename)
 		make_img_wordcloud(df, filename, img_file)
+	- Fix : wc 이후 bar_wc 사용시 워드클라우드 위에 그려지는 버그 수정.
 		
 - bar_wc(v1.2) :
 	- 변경 : 파일 이름을 인수로 받아서 저장

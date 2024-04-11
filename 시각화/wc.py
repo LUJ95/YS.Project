@@ -29,6 +29,7 @@ def make_wordcloud(df, filename):
         plt.axis('off') # 축 없애기
         plt.imshow(img_wordcloud) # 결과 보여주기
         plt.savefig(filename + '_wc') # 파일 저장
+        plt.show()
     except Exception as e:
         print(e)
 
@@ -57,6 +58,7 @@ def make_img_wordcloud(df, filename, img_file):
         plt.axis('off') # 축 없애기
         plt.imshow(img_wordcloud) # 결과 보여주기
         plt.savefig(filename + '_mask_wc') # 파일 저장
+        plt.show()
     except Exception as e:
         print(e)
     
