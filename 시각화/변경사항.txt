@@ -13,6 +13,10 @@
 [240411]
 - wc (v1.1a) :
 	- Fix : 
-		잘못된 변수 할당 수정.
+		line 20, 잘못된 변수 할당 수정.
+		- 변경 전 : dic_word = df_word.set_index('word').to_dict()['count']
+		- 변경 후 : dic_word = df.set_index('word').to_dict()['count']
+		
+		line 48, 잘못된 변수 할당 수정.
 		- 변경 전 : dic_word = df_word.set_index('word').to_dict()['count']
 		- 변경 후 : dic_word = df.set_index('word').to_dict()['count']

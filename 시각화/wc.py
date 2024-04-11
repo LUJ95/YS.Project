@@ -45,7 +45,7 @@ def make_img_wordcloud(df, img_file):
         img.paste(icon, icon)
         img = np.array(img)
         # df를 dict로 변환
-        dic_word = df_word.set_index('word').to_dict()['count']
+        dic_word = df.set_index('word').to_dict()['count']
         
         # 워드클라우드 객체 생성
         wc = WordCloud(random_state = 123, font_path = './NanumBarunGothic.ttf', width = 400,
