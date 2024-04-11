@@ -6,11 +6,11 @@ Created on Tue Apr  9 10:14:33 2024
 """
 
 # 막대그래프, 가로 막대그래프 함수 모듈 :
-    # bar_wordcount(x_col, y_col)
-    # barh_wordcount(x축 컬럼, y축 컬럼)
+    # bar_wordcount(x_col, y_col, filename)
+    # barh_wordcount(x축 컬럼, y축 컬럼, 저장할 파일 이름)
 
 # %%
-def bar_wordcount(x_col, y_col):
+def bar_wordcount(x_col, y_col, filename):
     
     import matplotlib.pyplot as plt
     plt.rc('font', family='NaNumBarunGothic')
@@ -23,9 +23,10 @@ def bar_wordcount(x_col, y_col):
     for rect in bar:
         height = rect.get_height()
         plt.text(rect.get_x() + rect.get_width()/2.0, height, '%.1d' % height, ha='center', va='bottom', size = 8, color='r')
+    plt.savefig(filename + '_bar')
     plt.show()
 # %%
-def barh_wordcount(x_col, y_col):
+def barh_wordcount(x_col, y_col, filename):
     
     import matplotlib.pyplot as plt
     plt.rc('font', family='NanumBarunGothic')
@@ -37,6 +38,7 @@ def barh_wordcount(x_col, y_col):
     for rect in barh:
         width = rect.get_width()
         plt.text(width + 1.5, rect.get_y() - 0.15, '%.1d' % width, ha='center', va='bottom', size = 7, color='g')
+    plt.savefig(filename + '_barh')
     plt.show()
     
 

@@ -12,7 +12,7 @@ Created on Mon Apr  8 15:58:05 2024
 
 
 # %%
-def make_wordcloud(df):
+def make_wordcloud(df, filename):
     try:    
         from wordcloud import WordCloud # 워드클라우드 제작 라이브러리
         import matplotlib.pyplot as plt # 워드클라우드 시각화 라이브러리
@@ -28,13 +28,13 @@ def make_wordcloud(df):
         plt.figure(figsize = (10, 10)) # 크기 지정하기
         plt.axis('off') # 축 없애기
         plt.imshow(img_wordcloud) # 결과 보여주기
-        plt.savefig('워드클라우드') # 파일 저장
+        plt.savefig(filename + '_wc') # 파일 저장
     except Exception as e:
         print(e)
 
 # %%
 
-def make_img_wordcloud(df, img_file):
+def make_img_wordcloud(df, filename, img_file):
     try:
         from wordcloud import WordCloud # 워드클라우드 제작 라이브러리
         import matplotlib.pyplot as plt # 워드클라우드 시각화 라이브러리
@@ -56,7 +56,7 @@ def make_img_wordcloud(df, img_file):
         plt.figure(figsize = (10, 10)) # 크기 지정하기
         plt.axis('off') # 축 없애기
         plt.imshow(img_wordcloud) # 결과 보여주기
-        plt.savefig('마스크_워드클라우드') # 파일 저장
+        plt.savefig(filename + '_mask_wc') # 파일 저장
     except Exception as e:
         print(e)
     
@@ -100,4 +100,4 @@ if __name__ == "__main__":
 
     make_wordcloud(df_word)
     # %%
-    make_img_wordcloud(df_word, 'south_korea.png')
+    make_img_wordcloud(df_word,'한산_댓글모음' ,'bird.png')
