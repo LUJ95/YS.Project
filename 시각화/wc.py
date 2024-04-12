@@ -37,6 +37,7 @@ def make_wordcloud(df, filename):
 
 def make_img_wordcloud(df, filename, img_file):
     try:
+        import numpy as np
         from wordcloud import WordCloud # 워드클라우드 제작 라이브러리
         import matplotlib.pyplot as plt # 워드클라우드 시각화 라이브러리
         import PIL
@@ -67,7 +68,7 @@ def make_img_wordcloud(df, filename, img_file):
 if __name__ == "__main__":
     
     import pandas as pd # 데이터 프레임 라이브러리
-    import numpy as np # 행렬 라이브러리
+    
     
     
     df = pd.read_csv('한산_댓글모음.csv')
