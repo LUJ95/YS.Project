@@ -31,3 +31,8 @@
 	- 변경 : 파일 이름을 인수로 받아서 저장
 		bar_wordcount(x_col, y_col, filename)
 		barh_wordcount(x_col, y_col, filename)
+		
+[240412]
+- 수정 :
+	- bar_wc(v1.2a) :
+		- 예외처리하도록 구문 수정
