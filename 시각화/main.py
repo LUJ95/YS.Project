@@ -28,53 +28,79 @@ all_president = [kim, roh, lee, lee2, park, moon]
 # %%
 # 전처리 불가 특수첨자 사용된 게시물id
 error = [1330443, 1330504]
-
+# %%
+lst = list(range(moon[0],moon[1]+1))
+lst[-1]
 # %%
 import sps
 
 selected_speeches = []
 speeches = []
 speeches_list = []
+speeches_all = []
 k = 0
 
 for president in all_president:
+    
     for idn in range(president[0], president[1] + 1):
-        if k > 0 and k % 300 == 0:
-            speeches_list.append(speeches)
-            speeches = []
+        
         speech = sps.scrape_presidential_speech(idn)
-        if idn in error:
-            continue
-        elif idn in selected:
-            selected_speeches.append(speech)
-        elif len(speech) > 0:
-            speeches.append(speech)
-            k += 1
-            if (president == all_president[-1] and idn == president[-1]):
+        
+        if len(speech) > 0:   
+            if idn in selected:
+                selected_speeches.append(speech)
+            else:
+                speeches.append(speech)
+                speeches_all.append(speech)
+                k += 1
+            if (k > 0 and k % 100 == 0):
                 speeches_list.append(speeches)
+                speeches = []
+                
+        if idn == all_president[-1][-1]:
+            speeches_list.append(speeches)
+            print('크롤링이 종료되었습니다.')
+            print('마지막 artid: ')
+            print(idn)
+            
             
 # %%
-# sps.save_to_excel(selected_speeches, 'selected_speeches.xlsx')
-# sps.save_to_excel(speeches)
+
 import pandas as pd
 df_selected = pd.DataFrame({"연설문": selected_speeches})
-# df_speeches = pd.DataFrame({"연설문": speeches})
 
 df_list = []
-# 데이터분할
-for i in range(len(speeches):
-
+# 연설문 전체를 데이터프레임 리스트로 변환, excel파일로 저장
+i = 1
+for speeches in speeches_list:
+    df_speeches = pd.DataFrame({'연설문':speeches})
+    df_list.append(df_speeches)
+    df_speeches.to_excel('speeches{}.xlsx'.format(i), index=False)
+    i += 1
+    
 df_selected.to_excel('selected_speeches.xlsx', index=False)
-df_speeches.to_excel('speeches.xlsx', index=False)
+
 #%%
 # 2. 데이터 정제
 import pp
 selected_pp = pp.preprocess(df_selected)
+
 # %%
-# print(df_selected.isnull().sum())
-# print(df_speeches.isnull().sum())
+pp_list = []
+
 # %%
-speeches_pp = pp.preprocess(df_speeches)
+for speeches in df_list:
+    pp_list.append(pp.preprocess(speeches))
+
+
+# %%
+# 연설문 전체 합치는 부분(미완)
+# pp_sum = pd.DataFrame()
+# for pp_speeches in pp_list:
+#     if pp_speeches == pp_list[0]:
+#         pp_sum = pp_speeches
+#     else:
+#         pp_sum.groupby('word')
 
 
 # %%
