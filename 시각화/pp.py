@@ -46,10 +46,10 @@ def preprocess(df):
         text = re.sub(pattern, '', text)  
         print('패턴 제거 완료')
         # 불용어 제거
-        delete_patterns = ['니다', '국민', '여러분', '청년', '감사', '생각', '노력', '존경']
-        for pattern in delete_patterns:
-            text = re.sub(pattern, '', text)
-        print('불용어 제거 완료')
+        # delete_patterns = ['니다', '국민', '여러분', '청년', '감사', '생각', '노력', '존경']
+        # for pattern in delete_patterns:
+        #     text = re.sub(pattern, '', text)
+        # print('불용어 제거 완료')
         # 명사만 추출하기
         komoran = Komoran()
         nouns = komoran.nouns(text)
@@ -65,7 +65,7 @@ def preprocess(df):
     except Exception as e:
         print(e)
         empty = []
-        return pd.DataFrame({'연설문':empty})
+        return pd.DataFrame({'word':empty, 'count':empty})
     
         
     

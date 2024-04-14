@@ -10,9 +10,8 @@ Created on Mon Apr  8 15:58:05 2024
 # 제약사항:
  # 인수 df의 열이 2개이며 열 이름이 word, count이어야 함.
 
-
 # %%
-def make_wordcloud(df, filename):
+def make_wordcloud(df, filename='wordcloud'):
     try:    
         from wordcloud import WordCloud # 워드클라우드 제작 라이브러리
         import matplotlib.pyplot as plt # 워드클라우드 시각화 라이브러리

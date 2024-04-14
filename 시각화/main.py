@@ -25,18 +25,15 @@ lee2 = [1310127, 1310336]
 park = [1400001, 1400493]
 moon = [1400600, 1402000]
 all_president = [kim, roh, lee, lee2, park, moon]
-# %%
-# 전처리 불가 특수첨자 사용된 게시물id
-error = [1330443, 1330504]
-# %%
-lst = list(range(moon[0],moon[1]+1))
-lst[-1]
+
 # %%
 import sps
 
 selected_speeches = []
+
 speeches = []
 speeches_list = []
+
 speeches_all = []
 k = 0
 
@@ -53,24 +50,25 @@ for president in all_president:
                 speeches.append(speech)
                 speeches_all.append(speech)
                 k += 1
-            if (k > 0 and k % 100 == 0):
-                speeches_list.append(speeches)
-                speeches = []
-                
-        if idn == all_president[-1][-1]:
+        
+        if (k > 0 and k % 50 == 0) \
+            or idn == all_president[-1][-1]:
             speeches_list.append(speeches)
-            print('크롤링이 종료되었습니다.')
-            print('마지막 artid: ')
-            print(idn)
+            speeches = []
             
+            print('[크롤링 종료]')
+            print('마지막 artid: ', idn)
             
+print('연설문 수 : ', k)
 # %%
 
 import pandas as pd
-df_selected = pd.DataFrame({"연설문": selected_speeches})
 
+df_selected = pd.DataFrame({"연설문": selected_speeches})
+df_selected.to_excel('selected_speeches.xlsx', index=False)
+
+# 연설문 전체: str 리스트 -> df 리스트로 변환, excel파일로 저장
 df_list = []
-# 연설문 전체를 데이터프레임 리스트로 변환, excel파일로 저장
 i = 1
 for speeches in speeches_list:
     df_speeches = pd.DataFrame({'연설문':speeches})
@@ -78,47 +76,61 @@ for speeches in speeches_list:
     df_speeches.to_excel('speeches{}.xlsx'.format(i), index=False)
     i += 1
     
-df_selected.to_excel('selected_speeches.xlsx', index=False)
-
 #%%
 # 2. 데이터 정제
 import pp
 selected_pp = pp.preprocess(df_selected)
+# %%
+new_idx = pd.RangeIndex(len(selected_pp))
+selected_pp = selected_pp.set_index(new_idx)
 
 # %%
 pp_list = []
 
-# %%
 for speeches in df_list:
     pp_list.append(pp.preprocess(speeches))
 
-
 # %%
-# 연설문 전체 합치는 부분(미완)
-# pp_sum = pd.DataFrame()
-# for pp_speeches in pp_list:
-#     if pp_speeches == pp_list[0]:
-#         pp_sum = pp_speeches
-#     else:
-#         pp_sum.groupby('word')
+# 연설문 전체 합치는 부분
+pp_all = pp_list[0]
 
+for pp_speeches in pp_list[1:]:
+    
+    pp_all = pd.concat([pp_all, pp_speeches])
 
+pp_all = pp_all.groupby('word').sum().sort_values(by='count', ascending=False)
+
+pp_all.reset_index(inplace=True)
+# %%
+del_list = ['세계','정부', '국민', '여러분', '청년', '감사', '생각', '노력', '존경']
+selected_d = selected_pp.loc[~selected_pp['word'].isin(del_list)]
+d_all = pp_all.loc[~pp_all['word'].isin(del_list)]
+
+top20_selected = selected_d[:20]
+top20 = d_all[:20]
+# %%
+# 엑셀 저장
+selected_pp.to_excel('selected_pp.xlsx', index=False)
+pp_all.to_excel('pp_all.xlsx',index=False)
+
+selected_d.to_excel('selected_d.xlsx', index=False)
+d_all.to_excel('d_all.xlsx', index=False)
 # %%
 # 3. 데이터 시각화
 import wc
 import bar_wc as bw
 
 # 
-bw.bar_wordcount(selected_pp, 'selected')
-bw.barh_wordcount(selected_pp, 'selected')
+bw.bar_wordcount(top20_selected, 'selected')
+bw.barh_wordcount(top20_selected, 'selected')
 
-wc.make_wordcloud(selected_pp, 'selected')
-wc.make_img_wordcloud(selected_pp, 'selected', 'bird.png')
+wc.make_wordcloud(top20_selected, 'selected')
+wc.make_img_wordcloud(top20_selected, 'selected', 'bird.png')
 
-bw.bar_wordcount(speeches_pp, 'speeches')
-bw.barh_wordcount(speeches_pp, 'speeches')
+bw.bar_wordcount(top20, 'speeches')
+bw.barh_wordcount(top20, 'speeches')
 
-wc.make_wordcloud(speeches_pp, 'speeches')
-wc.make_img_wordcloud(speeches_pp, 'speeches', 'bird.png')
+wc.make_wordcloud(top20, 'speeches')
+wc.make_img_wordcloud(top20, 'speeches', 'bird.png')
 
 # %%
