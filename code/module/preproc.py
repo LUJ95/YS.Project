@@ -41,9 +41,6 @@ def prerprocess():
     selected_d = selected_pp.loc[~selected_pp['word'].isin(del_list)]
     d_all = pp_all.loc[~pp_all['word'].isin(del_list)]
 
-    top20_selected = selected_d[:20]
-    top20 = d_all[:20]
-
     # 엑셀 저장
     # 불용어 처리 전
     selected_pp.to_excel('./data/selected_pp.xlsx', index=False)
